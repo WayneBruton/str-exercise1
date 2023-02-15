@@ -21,7 +21,7 @@
 
       <div class="q-pa-md">
         <q-table
-        v-if="moviesSearched.length"
+          v-if="moviesSearched.length"
           title="Movie Search"
           :rows="moviesSearched"
           :columns="columns"
@@ -49,9 +49,24 @@
                   color="amber"
                   icon="visibility"
                   size="sm"
+                  flat
                   @click="viewMovieDetails(props.row)"
-                ></q-btn>
-                <q-btn color="green" icon="add" size="sm" @click="addMovies(props.row)"></q-btn>
+                >
+                  <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]">
+                    View details
+                  </q-tooltip>
+                </q-btn>
+                <q-btn
+                  color="red"
+                  flat
+                  icon="favorite"
+                  size="sm"
+                  @click="addMovies(props.row)"
+                >
+                <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]">
+                    Add as Favourite
+                  </q-tooltip>
+                </q-btn>
               </q-td>
             </q-tr>
           </template>
@@ -64,7 +79,6 @@
           dark
           color="amber"
           :pagination="initialPagination"
-          
         >
           <template v-slot:body="props">
             <q-tr :props="props">
@@ -82,14 +96,28 @@
               </q-td>
               <q-td key="actions" :props="props">
                 <q-btn
-                flat
+                  flat
                   style="margin-right: 10px"
                   color="amber"
                   icon="visibility"
                   size="sm"
                   @click="viewMovieDetailsDb(props.row)"
-                ></q-btn>
-                <q-btn flat color="red" icon="delete" size="sm" @click="deleteMovie(props.row)"></q-btn>
+                >
+                <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]">
+                    View details
+                  </q-tooltip>
+                </q-btn>
+                <q-btn
+                  flat
+                  color="red"
+                  icon="delete"
+                  size="sm"
+                  @click="deleteMovie(props.row)"
+                >
+                <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]">
+                    Remove from List
+                  </q-tooltip>
+                </q-btn>
               </q-td>
             </q-tr>
           </template>
@@ -138,7 +166,7 @@
               </q-card-section>
 
               <q-card-section class="q-pt-none">
-                Year: {{ showMovieInDB.year}}
+                Year: {{ showMovieInDB.year }}
               </q-card-section>
               <q-card-section class="q-pt-none">
                 Type: {{ showMovieInDB.type }}
@@ -156,7 +184,6 @@
         </div>
       </div>
     </div>
-   
   </q-page>
 </template>
 
@@ -233,7 +260,6 @@ const getMoviesFromAPI = async () => {
 };
 
 const addMovies = async (props) => {
-
   store.movies.push({
     title: props.Title,
     type: props.Type,
@@ -241,9 +267,8 @@ const addMovies = async (props) => {
     imdbID: props.imdbID,
     Poster: props.Poster,
   });
-  moviesSearched.value = []
-  searchText.value = ""
-
+  moviesSearched.value = [];
+  searchText.value = "";
 };
 
 const deleteMovie = (props) => {
@@ -251,11 +276,10 @@ const deleteMovie = (props) => {
 };
 
 const initialPagination = ref({
-        sortBy: 'desc',
-        descending: false,
-        page: 1,
-        rowsPerPage: 100
-        // rowsNumber: xx if getting data from a server
-      })
-
+  sortBy: "desc",
+  descending: false,
+  page: 1,
+  rowsPerPage: 100,
+  // rowsNumber: xx if getting data from a server
+});
 </script>
