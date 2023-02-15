@@ -28,6 +28,7 @@
           row-key="name"
           dark
           color="amber"
+          style="margin 0px 15px"
         >
           <template v-slot:body="props">
             <q-tr :props="props">
@@ -80,9 +81,10 @@
           color="amber"
           :pagination="initialPagination"
           :filter="filter"
+          style="margin 0px 15px"
         >
         <template v-slot:top-right>
-        <q-input borderless dense debounce="300" v-model="filter" placeholder="Search">
+        <q-input outlined dense debounce="300" v-model="filter" placeholder="Search">
           <template v-slot:append>
             <q-icon name="search" />
           </template>
@@ -240,10 +242,10 @@ const columns = ref([
     label: "Title",
     align: "left",
     sortable: true,
-    field: "Title",
+    field: "title",
   },
-  { name: "Type", align: "left", label: "Type", field: "Type", sortable: true },
-  { name: "Year", align: "left", label: "Year", field: "Year", sortable: true },
+  { name: "Type", align: "left", label: "Type", field: "type", sortable: true },
+  { name: "Year", align: "left", label: "Year", field: "year", sortable: true },
   { name: "imdbID", align: "left", label: "imdbID", field: "imdbID", sortable: true, },
   {
     name: "actions",
