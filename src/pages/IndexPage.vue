@@ -79,7 +79,15 @@
           dark
           color="amber"
           :pagination="initialPagination"
+          :filter="filter"
         >
+        <template v-slot:top-right>
+        <q-input borderless dense debounce="300" v-model="filter" placeholder="Search">
+          <template v-slot:append>
+            <q-icon name="search" />
+          </template>
+        </q-input>
+      </template>
           <template v-slot:body="props">
             <q-tr :props="props">
               <q-td key="Title" :props="props">
@@ -200,6 +208,7 @@ const showMovieDB = ref(false);
 const chosenMovie = ref(null);
 const showMovieInDB = ref(null);
 
+// Show movie table
 const viewMovieDetails = (props) => {
   chosenMovie.value = {
     title: props.Title,
@@ -211,6 +220,7 @@ const viewMovieDetails = (props) => {
   showMovie.value = true;
 };
 
+// Show saved movies table
 const viewMovieDetailsDb = (props) => {
   showMovieInDB.value = {
     title: props.title,
@@ -222,6 +232,7 @@ const viewMovieDetailsDb = (props) => {
   showMovieDB.value = true;
 };
 
+// Table columns
 const columns = ref([
   {
     name: "Title",
@@ -233,7 +244,7 @@ const columns = ref([
   },
   { name: "Type", align: "left", label: "Type", field: "Type", sortable: true },
   { name: "Year", align: "left", label: "Year", field: "Year", sortable: true },
-  { name: "imdbID", align: "left", label: "imdbID", field: "imdbID" },
+  { name: "imdbID", align: "left", label: "imdbID", field: "imdbID", sortable: true, },
   {
     name: "actions",
     label: "Actions",
@@ -241,6 +252,7 @@ const columns = ref([
   },
 ]);
 
+// Search for movies etc
 const getMoviesFromAPI = async () => {
   await axios({
     method: "get",
@@ -259,6 +271,7 @@ const getMoviesFromAPI = async () => {
     });
 };
 
+// Add movie to list
 const addMovies = async (props) => {
   store.movies.push({
     title: props.Title,
@@ -271,15 +284,18 @@ const addMovies = async (props) => {
   searchText.value = "";
 };
 
+// delete movie
 const deleteMovie = (props) => {
   store.movies = store.movies.filter((movie) => movie.imdbID !== props.imdbID);
 };
-
+//Pagination
 const initialPagination = ref({
   sortBy: "desc",
   descending: false,
   page: 1,
   rowsPerPage: 100,
-  // rowsNumber: xx if getting data from a server
 });
+
+// Filter Rows
+const filter = ref('')
 </script>
